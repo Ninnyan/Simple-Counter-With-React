@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const container = document.querySelector('#root')
+        const root = ReactDOM.createRoot(container)
+        
+        function Counter (props) {
+            if (props.counter === 10 || props.counter === -10) {
+                return (<span> <strong> DONE ! </strong> </span>)
+            } 
+            return (<span> {props.counter} </span>)
+
+        }
+        
+        function Button(props, {event,click}) { 
+            if (props.counter === 10 || props.counter === -10) {
+                return (<button disabled onClick = {props.event}>{props.name}</button>)
+            } else if (props.name === 'reset' && props.counter) {
+                return (<button disabled onClick = {props.event}>{props.name}</button>)
+            }
+            return (<button  onClick = {props.event}>{props.name}</button>)
+        }
+            
+        
+        function HomePage() {
+            const [counter,setcounter] = React.useState(0)
+            
+            function plusClick() {
+                setcounter(counter + 1)
+            }
+            function minusClick() {
+                setcounter(counter - 1)
+            }
+            function reset() {
+                setcounter(counter - counter)
+            }
+
+            return (
+                <>
+
+                    <Button name="-" event={minusClick} counter={counter}/>
+                    <Counter counter={counter}/>
+                    <Button name="+" event={plusClick} counter={counter}/>
+                    
+                    <br/>
+                    <br/>
+                    <Button name="reset" counter={counter < 10 && counter > -10} event={reset}/>
+                    
+                </>
+            )
+        }
+        
+        root.render(<HomePage />)
+
+    </script>
+</body>
+</html>
